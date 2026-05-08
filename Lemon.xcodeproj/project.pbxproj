@@ -15,7 +15,6 @@
 		2F7D4C912192EFE7008D59E0 /* renameApp.sh in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2F7D4C902192EFCB008D59E0 /* renameApp.sh */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		2F8855A721BE53D700E659C7 /* LMInstallerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F8855A521BE53D500E659C7 /* LMInstallerHelper.m */; };
 		2F980D8D21AEBAFB0066D520 /* com.tencent.Lemon.trash.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2F980D8C21AEBAFB0066D520 /* com.tencent.Lemon.trash.plist */; };
-		2FA7A47821C285A900B93EF5 /* com.tencent.Lemon.listen.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2FA7A47221C285A900B93EF5 /* com.tencent.Lemon.listen.plist */; };
 		2FA7A5A621C77C4B00B93EF5 /* com.tencent.Lemon.uninstall.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2FA7A59E21C77C4B00B93EF5 /* com.tencent.Lemon.uninstall.plist */; };
 		5CA3561121DF4A4900BCD89D /* privacyclean07@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CA3559621DF4A4800BCD89D /* privacyclean07@2x.png */; };
 		5CA3561221DF4A4900BCD89D /* privacyclean09@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5CA3559721DF4A4800BCD89D /* privacyclean09@2x.png */; };
@@ -241,9 +240,10 @@
 		BC7FBE402268195600D025CF /* LMSplashMainAppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC7FBE3F2268195600D025CF /* LMSplashMainAppViewController.m */; };
 		BCD2CBF121806BEA005C2990 /* register_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCD2CBF021806BE9005C2990 /* register_bg@2x.png */; };
 		BCD2CBF321806BF8005C2990 /* register_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BCD2CBF221806BF8005C2990 /* register_bg@3x.png */; };
+		D462673221DDD07D005BC358 /* LMPhotoViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F86C2232140BF8B00B8C0A9 /* LMPhotoViewItem.xib */; };
+		D462675021DDD07D005BC358 /* PhotoCollectionViewHeader.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2F86C2252140BFBB00B8C0A9 /* PhotoCollectionViewHeader.xib */; };
 		D462677921DDD0E0005BC358 /* Lemonas-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D462677821DDD0E0005BC358 /* Lemonas-Info.plist */; };
 		D46267D021DDEEA4005BC358 /* LemonDaemon in Copy Files */ = {isa = PBXBuildFile; fileRef = D46267A921DDED73005BC358 /* LemonDaemon */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		D46267D221DDEEA4005BC358 /* LemonDaemonActivator in Copy Files */ = {isa = PBXBuildFile; fileRef = D46267AD21DDED73005BC358 /* LemonDaemonActivator */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		D470B28E22410FC100793F4A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D4D4F5E320F5C3BC0048F108 /* Assets.xcassets */; };
 		D4B5E0822232624300FDA272 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D4D4F5E520F5C3BC0048F108 /* MainMenu.xib */; };
 		D4B726682140C4E7003B59B5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4B726672140C4E7003B59B5 /* Security.framework */; };
@@ -284,7 +284,6 @@
 		F8190F03212454DC00454795 /* LMMainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8190F01212454DC00454795 /* LMMainViewController.xib */; };
 		F8190F07212454F000454795 /* LMToolViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F8190F05212454F000454795 /* LMToolViewController.m */; };
 		F8190F08212454F000454795 /* LMToolViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F8190F06212454F000454795 /* LMToolViewController.xib */; };
-		F847086D22DF11FE0056CD1D /* com.tencent.Lemon.listen.plist in Copy Files */ = {isa = PBXBuildFile; fileRef = 2FA7A47221C285A900B93EF5 /* com.tencent.Lemon.listen.plist */; };
 		F847086E22DF11FE0056CD1D /* com.tencent.Lemon.uninstall.plist in Copy Files */ = {isa = PBXBuildFile; fileRef = 2FA7A59E21C77C4B00B93EF5 /* com.tencent.Lemon.uninstall.plist */; };
 		F847086F22DF11FE0056CD1D /* com.tencent.LemonMonitor.plist in Copy Files */ = {isa = PBXBuildFile; fileRef = D4F025CF212D4BCE005E3D3B /* com.tencent.LemonMonitor.plist */; };
 		F847087022DF11FE0056CD1D /* com.tencent.Lemon.plist in Copy Files */ = {isa = PBXBuildFile; fileRef = D4F025D1212D4BCE005E3D3B /* com.tencent.Lemon.plist */; };
@@ -394,13 +393,6 @@
 			remoteGlobalIDString = D4E1D84C20F5F6D9001FA263;
 			remoteInfo = LemonDaemon;
 		};
-		D46267AC21DDED73005BC358 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D46267A221DDED72005BC358 /* LemonDaemon.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 2FA7A53C21C3C65C00B93EF5;
-			remoteInfo = LemonDaemonActivator;
-		};
 		D46267C221DDEE1C005BC358 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D46267A221DDED72005BC358 /* LemonDaemon.xcodeproj */;
@@ -476,13 +468,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F847086D22DF11FE0056CD1D /* com.tencent.Lemon.listen.plist in Copy Files */,
 				F847086E22DF11FE0056CD1D /* com.tencent.Lemon.uninstall.plist in Copy Files */,
 				F847086F22DF11FE0056CD1D /* com.tencent.LemonMonitor.plist in Copy Files */,
 				F847087022DF11FE0056CD1D /* com.tencent.Lemon.plist in Copy Files */,
 				F847087122DF11FE0056CD1D /* com.tencent.Lemon.trash.plist in Copy Files */,
 				D46267D021DDEEA4005BC358 /* LemonDaemon in Copy Files */,
-				D46267D221DDEEA4005BC358 /* LemonDaemonActivator in Copy Files */,
 				D4F3EDA32134EC80000E29B4 /* LemonClener.framework in Copy Files */,
 			);
 			name = "Copy Files";
@@ -516,7 +506,6 @@
 		2F8855A521BE53D500E659C7 /* LMInstallerHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMInstallerHelper.m; sourceTree = "<group>"; };
 		2F8855A621BE53D600E659C7 /* LMInstallerHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMInstallerHelper.h; sourceTree = "<group>"; };
 		2F980D8C21AEBAFB0066D520 /* com.tencent.Lemon.trash.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = com.tencent.Lemon.trash.plist; sourceTree = "<group>"; };
-		2FA7A47221C285A900B93EF5 /* com.tencent.Lemon.listen.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = com.tencent.Lemon.listen.plist; sourceTree = "<group>"; };
 		2FA7A59E21C77C4B00B93EF5 /* com.tencent.Lemon.uninstall.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = com.tencent.Lemon.uninstall.plist; sourceTree = "<group>"; };
 		5CA3559621DF4A4800BCD89D /* privacyclean07@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "privacyclean07@2x.png"; sourceTree = "<group>"; };
 		5CA3559721DF4A4800BCD89D /* privacyclean09@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "privacyclean09@2x.png"; sourceTree = "<group>"; };
@@ -1324,7 +1313,6 @@
 			isa = PBXGroup;
 			children = (
 				D46267A921DDED73005BC358 /* LemonDaemon */,
-				D46267AD21DDED73005BC358 /* LemonDaemonActivator */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1441,7 +1429,6 @@
 		D4F025CB212D4BCE005E3D3B /* PreLaunch */ = {
 			isa = PBXGroup;
 			children = (
-				2FA7A47221C285A900B93EF5 /* com.tencent.Lemon.listen.plist */,
 				2FA7A59E21C77C4B00B93EF5 /* com.tencent.Lemon.uninstall.plist */,
 				D4F025CF212D4BCE005E3D3B /* com.tencent.LemonMonitor.plist */,
 				D4F025D1212D4BCE005E3D3B /* com.tencent.Lemon.plist */,
@@ -1754,13 +1741,6 @@
 			remoteRef = D46267A821DDED73005BC358 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		D46267AD21DDED73005BC358 /* LemonDaemonActivator */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = LemonDaemonActivator;
-			remoteRef = D46267AC21DDED73005BC358 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		D462687821DE0924005BC358 /* LemonMonitor.app */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.application;
@@ -1978,7 +1958,6 @@
 				5CA3564321DF4A4900BCD89D /* protectmachine11.png in Resources */,
 				BCD2CBF121806BEA005C2990 /* register_bg@2x.png in Resources */,
 				F876427F21E75DCD00C23611 /* ar@2x.png in Resources */,
-				2FA7A47821C285A900B93EF5 /* com.tencent.Lemon.listen.plist in Resources */,
 				F87642A221E75DCD00C23611 /* pl@2x.png in Resources */,
 				F876427A21E75DCD00C23611 /* sv.png in Resources */,
 				5CA3578021DF511100BCD89D /* uninstallapp07@2x.png in Resources */,

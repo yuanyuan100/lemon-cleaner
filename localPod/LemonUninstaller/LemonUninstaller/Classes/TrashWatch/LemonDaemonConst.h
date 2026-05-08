@@ -38,7 +38,8 @@
 #define MONITOR_SRC_APP_PATH    @"/Applications/Tencent Lemon.app/Contents/Frameworks/LemonMonitor.app"
 #define MONITOR_APP_PATH        @"/Library/Application Support/Lemon/LemonMonitor.app"
 
-#define DAEMON_ACTIVATOR_CMD   @"/Applications/Tencent\\ Lemon.app/Contents/Frameworks/LemonDaemonActivator"
+// DEPRECATED - socket 唤醒机制已移除
+// #define DAEMON_ACTIVATOR_CMD   @"/Applications/Tencent\\ Lemon.app/Contents/Frameworks/LemonDaemonActivator"
 
 //使用相对路径，因为该宏会在多个程序中使用，比如主的Lemon.app和LemonMonitor.app中就会有不同的值，所以要使用相对路径，就需要在各自的工程中另外定义
 //#define MONITOR_APP_PATH        [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:MONITOR_APP_NAME]

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		2FA7A48321C2869200B93EF5 /* LMPlistHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA7A48221C2869200B93EF5 /* LMPlistHelper.m */; };
 		2FA7A4A621C38D8C00B93EF5 /* DaemonStartup.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA7A4A521C38D8C00B93EF5 /* DaemonStartup.m */; };
-		2FA7A53F21C3C65C00B93EF5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2FA7A53E21C3C65C00B93EF5 /* main.m */; };
 		76B4C27C287294C000F61386 /* LMDMVersionHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 76B4C27B287294C000F61386 /* LMDMVersionHelper.m */; };
 		785CA6227A7C5B29A3F7C3D5 /* libPods-LemonDaemon.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 71B3D3D30CBDF7DC92261FBF /* libPods-LemonDaemon.a */; };
 		7A0221CD2865BED8000F9FD4 /* CmcSystem.c in Sources */ = {isa = PBXBuildFile; fileRef = 7A0221CC2865BED8000F9FD4 /* CmcSystem.c */; };
@@ -21,6 +20,8 @@
 		B79C27C82B84925400838B76 /* McFanInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B79C27BE2B84925300838B76 /* McFanInfo.m */; };
 		B79C27C92B84925400838B76 /* McTemperatureInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = B79C27C22B84925400838B76 /* McTemperatureInfo.m */; };
 		B79C27D12B84957700838B76 /* McCpuInfoSMC.m in Sources */ = {isa = PBXBuildFile; fileRef = B79C27D02B84957700838B76 /* McCpuInfoSMC.m */; };
+		AFCEF47597E1AACD788773BB /* Pods_LemonDaemon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99E173883597AA1AF503B1FA /* Pods_LemonDaemon.framework */; };
+		BC68429F225DA7020074B2D2 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = BC68429D225DA7020074B2D2 /* NSString+Extension.m */; };
 		BC6842B8225E0E980074B2D2 /* ExecuteCmdHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = BC6842B6225E0E970074B2D2 /* ExecuteCmdHelper.m */; };
 		BC8254EE22FA7DF100292FA5 /* LMKextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BC8254ED22FA7DF100292FA5 /* LMKextManager.m */; };
 		D466802221AE8B6500704647 /* LMDaemonXPCService.m in Sources */ = {isa = PBXBuildFile; fileRef = D466802121AE8B6500704647 /* LMDaemonXPCService.m */; };
@@ -51,15 +52,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		2FA7A53A21C3C65C00B93EF5 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
 		D4E1D84A20F5F6D9001FA263 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -77,10 +69,6 @@
 		2FA7A48221C2869200B93EF5 /* LMPlistHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMPlistHelper.m; sourceTree = "<group>"; };
 		2FA7A4A421C38D8C00B93EF5 /* DaemonStartup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DaemonStartup.h; path = DaemonStartup/DaemonStartup.h; sourceTree = "<group>"; };
 		2FA7A4A521C38D8C00B93EF5 /* DaemonStartup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DaemonStartup.m; path = DaemonStartup/DaemonStartup.m; sourceTree = "<group>"; };
-		2FA7A4A821C38EC000B93EF5 /* SocketCommunicationKeyWord.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SocketCommunicationKeyWord.h; sourceTree = "<group>"; };
-		2FA7A53C21C3C65C00B93EF5 /* LemonDaemonActivator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LemonDaemonActivator; sourceTree = BUILT_PRODUCTS_DIR; };
-		2FA7A53E21C3C65C00B93EF5 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		2FA7A54321C3C72600B93EF5 /* SocketCommunicationKeyWord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SocketCommunicationKeyWord.h; path = LemonDaemonActivator/SocketCommunicationKeyWord.h; sourceTree = SOURCE_ROOT; };
 		71B3D3D30CBDF7DC92261FBF /* libPods-LemonDaemon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LemonDaemon.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		76B4C27A287294C000F61386 /* LMDMVersionHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LMDMVersionHelper.h; sourceTree = "<group>"; };
 		76B4C27B287294C000F61386 /* LMDMVersionHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LMDMVersionHelper.m; sourceTree = "<group>"; };
@@ -168,13 +156,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		2FA7A53921C3C65C00B93EF5 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D4E1D84920F5F6D9001FA263 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -200,18 +181,8 @@
 			children = (
 				2FA7A4A421C38D8C00B93EF5 /* DaemonStartup.h */,
 				2FA7A4A521C38D8C00B93EF5 /* DaemonStartup.m */,
-				2FA7A54321C3C72600B93EF5 /* SocketCommunicationKeyWord.h */,
 			);
 			name = DaemonStartup;
-			sourceTree = "<group>";
-		};
-		2FA7A53D21C3C65C00B93EF5 /* LemonDaemonActivator */ = {
-			isa = PBXGroup;
-			children = (
-				2FA7A4A821C38EC000B93EF5 /* SocketCommunicationKeyWord.h */,
-				2FA7A53E21C3C65C00B93EF5 /* main.m */,
-			);
-			path = LemonDaemonActivator;
 			sourceTree = "<group>";
 		};
 		7A0221CE2865BEE7000F9FD4 /* oshlp */ = {
@@ -290,7 +261,6 @@
 			isa = PBXGroup;
 			children = (
 				D4E1D84E20F5F6D9001FA263 /* LemonDaemon */,
-				2FA7A53D21C3C65C00B93EF5 /* LemonDaemonActivator */,
 				D4E1D84D20F5F6D9001FA263 /* Products */,
 				20F46311F818E096281879C8 /* Pods */,
 				F76A3ED78A9C81C8F7B57A70 /* Frameworks */,
@@ -301,7 +271,6 @@
 			isa = PBXGroup;
 			children = (
 				D4E1D84C20F5F6D9001FA263 /* LemonDaemon */,
-				2FA7A53C21C3C65C00B93EF5 /* LemonDaemonActivator */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -464,23 +433,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		2FA7A53B21C3C65C00B93EF5 /* LemonDaemonActivator */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 2FA7A54221C3C65C00B93EF5 /* Build configuration list for PBXNativeTarget "LemonDaemonActivator" */;
-			buildPhases = (
-				2FA7A53821C3C65C00B93EF5 /* Sources */,
-				2FA7A53921C3C65C00B93EF5 /* Frameworks */,
-				2FA7A53A21C3C65C00B93EF5 /* CopyFiles */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = LemonDaemonActivator;
-			productName = LemonDaemonActivator;
-			productReference = 2FA7A53C21C3C65C00B93EF5 /* LemonDaemonActivator */;
-			productType = "com.apple.product-type.tool";
-		};
 		D4E1D84B20F5F6D9001FA263 /* LemonDaemon */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D4E1D85320F5F6D9001FA263 /* Build configuration list for PBXNativeTarget "LemonDaemon" */;
@@ -509,9 +461,6 @@
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = Tencent;
 				TargetAttributes = {
-					2FA7A53B21C3C65C00B93EF5 = {
-						CreatedOnToolsVersion = 10.1;
-					};
 					D4E1D84B20F5F6D9001FA263 = {
 						CreatedOnToolsVersion = 9.3;
 					};
@@ -530,7 +479,6 @@
 			projectRoot = "";
 			targets = (
 				D4E1D84B20F5F6D9001FA263 /* LemonDaemon */,
-				2FA7A53B21C3C65C00B93EF5 /* LemonDaemonActivator */,
 			);
 		};
 /* End PBXProject section */
@@ -557,14 +505,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		2FA7A53821C3C65C00B93EF5 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2FA7A53F21C3C65C00B93EF5 /* main.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D4E1D84820F5F6D9001FA263 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -614,33 +554,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		2FA7A54021C3C65C00B93EF5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "Developer ID Application: Tencent Technology (Shenzhen) Company Limited (88L2Q4487U)";
-				CODE_SIGN_STYLE = Manual;
-				ENABLE_HARDENED_RUNTIME = NO;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				OTHER_CODE_SIGN_FLAGS = "--timestamp=none";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		2FA7A54121C3C65C00B93EF5 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_IDENTITY = "Developer ID Application: Tencent Technology (Shenzhen) Company Limited (88L2Q4487U)";
-				CODE_SIGN_STYLE = Manual;
-				ENABLE_HARDENED_RUNTIME = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
-				MTL_FAST_MATH = YES;
-				OTHER_CODE_SIGN_FLAGS = "--timestamp -o library --deep";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 		D4E1D85120F5F6D9001FA263 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -805,15 +718,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		2FA7A54221C3C65C00B93EF5 /* Build configuration list for PBXNativeTarget "LemonDaemonActivator" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				2FA7A54021C3C65C00B93EF5 /* Debug */,
-				2FA7A54121C3C65C00B93EF5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		D4E1D84720F5F6D9001FA263 /* Build configuration list for PBXProject "LemonDaemon" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

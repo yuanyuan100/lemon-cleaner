@@ -119,25 +119,7 @@ int main(int argc, const char * argv[])
             NSLog(@"   %s", argv[i]);
         }
 
-        if (argc == 2 && strcmp(argv[1], kReloadListenPlist) == 0) {
-            redirectNSLog([NSString stringWithUTF8String:argv[1]], 30);
-            NSLog(@"reloadListenPlist");
-            setuid(0);
-            reloadListenPlist();
-            return 0;
-        }
-        
-        if (argc == 2 && strcmp(argv[1], kStartupDaemon_cstr) == 0) {
-            /* 注意， 这里不能redirectNSLog， 因为startDaemon时，NSLog是重定向到socket的
-               startDaemon时，通过NSLog给client发送，启动结果，如果这里redirectNSLog，client就收不到标志位，做成卡顿。
-            */
-            NSLog(@"startup daemon");
-            //返回数据后再重定向
-            startDaemon(); //唤醒
-            redirectNSLog([NSString stringWithUTF8String:argv[1]], 7);
-            printDaemonOrAgentsStatus();
-            return 0;
-        }
+        // Security fix: socket 唤醒分支(reloadListenPlist/startup)已移除
         
         if (argc == 2 && strcmp(argv[1], kCopySelfToApplication) == 0) {
             redirectNSLog([NSString stringWithUTF8String:argv[1]], 30);
@@ -224,13 +206,11 @@ int main(int argc, const char * argv[])
         NSLog(@"LemonDaemon main run");
         
         
-        // 检测Daemon是否真的要启动。
-        // 主要是用于处理开机自启的情况，开机时系统会把/LaunchDaemon下的plist都加载一遍, 造成会把Daemon拉活。
-        // 所以这里检测到没有client在，直接退出。
-        if (isNeedExitDaemon(0)) {
-            exitDaemon();
-            exit(0);
-        }
+        // daemon 保持常驻，不再检查 isNeedExitDaemon。
+        // 原因：移除 socket 后，exit(0) 会导致 launchd 移除 job，
+        // 后续客户端启动时 XPC 无法按需拉起 daemon。
+        // daemon 内存占用极低，保持常驻等待 XPC 连接。
+        // 退出逻辑由 clientExit() 负责（现在也改为不退出）。
         
         // 卸载自身(当Monitor的卸载机制出现异常,Agent下次启动时(比如开机时)卸载自身)
         if (![[NSFileManager defaultManager] fileExistsAtPath:DEFAULT_APP_PATH])

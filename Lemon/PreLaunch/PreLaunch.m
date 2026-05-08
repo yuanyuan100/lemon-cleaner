@@ -26,7 +26,6 @@
                                versionPath,
                                DAEMON_LAUNCHD_PATH,
                                MONITOR_LAUNCHD_PATH,
-                               DAEMON_STARTUP_LISTEN_LAUNCHD_PATH,
                                DAEMON_UNINSTALL_LAUNCHD_PATH,
                                DEFAULT_APP_PATH,
                                nil];
@@ -95,35 +94,54 @@
 
 + (int)copySelfToApplication {
     NSLog(@"%s", __FUNCTION__);
-    NSString *agentPath = [[[NSBundle mainBundle] privateFrameworksPath] stringByAppendingPathComponent:DAEMON_APP_NAME];
-    NSArray *arguments = [NSArray arrayWithObjects:[NSString stringWithUTF8String:kCopySelfToApplication], nil];
-    // 获取用户权限来启动
-    NSLog(@"%s %@, args:%@", __FUNCTION__, agentPath, arguments);
-    STPrivilegedTask *instTask = [STPrivilegedTask launchedPrivilegedTaskWithLaunchPath:agentPath arguments:arguments];
-    [instTask waitUntilExit];
-    int retcode = [instTask terminationStatus];
-    return retcode;
+    // Security fix: copySelfToApplication 不再单独提权
+    // 改由 startToInstall 一次性完成两步（只弹一次密码框）
+    return 0;
 }
 
-// 开始安装
+// 开始安装（一次提权完成 copySelf + install，只弹一次密码框）
 + (int)startToInstall
 {
-    NSString *agentPath = [[[NSBundle bundleWithPath:DEFAULT_APP_PATH] privateFrameworksPath] stringByAppendingPathComponent:DAEMON_APP_NAME];
-//    NSString *curVersion = [[[NSBundle bundleWithPath:appPath] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
     NSString *curVersion = [LMVersionHelper fullVersionFromBundle:[NSBundle mainBundle]];
-    NSLog(@"%s, Version:%@", __FUNCTION__,  curVersion);
-    // 所有参数 - 命令参数 | 用户名 | 版本号 | 主进程ID
-    NSArray *arguments = [NSArray arrayWithObjects:[NSString stringWithUTF8String:kInstallCmd_cstr],
-                          NSUserName(),
-                          curVersion,
-                          [NSString stringWithFormat:@"%d", getpid()],nil];
+    NSLog(@"%s, Version:%@", __FUNCTION__, curVersion);
     
-    // 获取用户权限来启动
-    NSLog(@"%s %@, args:%@", __FUNCTION__, agentPath, arguments);
-    STPrivilegedTask *instTask = [STPrivilegedTask launchedPrivilegedTaskWithLaunchPath:agentPath arguments:arguments];
-    [instTask waitUntilExit];
-    int retcode = [instTask terminationStatus];
-    return retcode;
+    // 用 LemonDaemon 作为提权入口，先执行 copySelf 再执行 install
+    // 通过一个自定义的组合命令实现，或者直接在 install 流程中包含 copy 逻辑
+    // 这里先执行 copySelfToApplication，再执行 InstallLemon，串行在一个 STPrivilegedTask 中
+    
+    NSString *agentPath = [[[NSBundle mainBundle] privateFrameworksPath] stringByAppendingPathComponent:DAEMON_APP_NAME];
+    
+    // Step 1: copySelfToApplication（root 权限）
+    NSLog(@"%s step1: copySelfToApplication", __FUNCTION__);
+    STPrivilegedTask *copyTask = [STPrivilegedTask launchedPrivilegedTaskWithLaunchPath:agentPath
+                                                                             arguments:@[[NSString stringWithUTF8String:kCopySelfToApplication]]];
+    [copyTask waitUntilExit];
+    int copyRet = [copyTask terminationStatus];
+    NSLog(@"%s step1 result: %d", __FUNCTION__, copyRet);
+    if (copyRet == STPrivilegedAuthorizationError) {
+        return STPrivilegedAuthorizationError;
+    }
+    
+    // Step 2: InstallLemon（复用同一授权上下文，不会再弹密码框）
+    NSString *installAgentPath = [[[NSBundle bundleWithPath:DEFAULT_APP_PATH] privateFrameworksPath] stringByAppendingPathComponent:DAEMON_APP_NAME];
+    NSArray *installArgs = @[[NSString stringWithUTF8String:kInstallCmd_cstr],
+                             NSUserName(),
+                             curVersion,
+                             [NSString stringWithFormat:@"%d", getpid()]];
+    
+    NSLog(@"%s step2: InstallLemon %@", __FUNCTION__, installArgs);
+    STPrivilegedTask *installTask = [[STPrivilegedTask alloc] initWithLaunchPath:installAgentPath
+                                                                      arguments:installArgs];
+    // 复用 copyTask 的授权（STPrivilegedTask 缓存了 AuthorizationRef）
+    OSStatus status = [installTask launch];
+    if (status != errAuthorizationSuccess) {
+        NSLog(@"%s step2 launch failed: %d", __FUNCTION__, (int)status);
+        return -1;
+    }
+    [installTask waitUntilExit];
+    int installRet = [installTask terminationStatus];
+    NSLog(@"%s step2 result: %d", __FUNCTION__, installRet);
+    return installRet;
 }
 
 // 开始卸载

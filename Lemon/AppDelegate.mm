@@ -122,6 +122,8 @@ extern "C" int CmcGetCurrentAppVersion(char *version, int version_size, char *bu
         NSLog(@"applicationDidFinishLaunching");
         // Insert code here to initialize your application
         
+        BOOL justInstalled = NO;
+        
 #ifndef DEBUG
         
 #ifndef APPSTORE_VERSION
@@ -131,6 +133,7 @@ extern "C" int CmcGetCurrentAppVersion(char *version, int version_size, char *bu
             self.runningType = (LemonAppRunningType)installType;
             NSLog(@"%s needToInstall and runningType: %ld", __FUNCTION__, self.runningType);
             [self installLemon];
+            justInstalled = YES;
         }
         NSLog(@"replaceInstall end");
         if (installType == LemonAppRunningFirstInstall){
@@ -147,11 +150,19 @@ extern "C" int CmcGetCurrentAppVersion(char *version, int version_size, char *bu
 #endif
         
 #ifndef APPSTORE_VERSION
-        [LMDaemonStartupHelper shareInstance].agentPath = [[[NSBundle bundleWithPath:DEFAULT_APP_PATH] privateFrameworksPath] stringByAppendingPathComponent:DAEMON_APP_NAME];
-        [LMDaemonStartupHelper shareInstance].arguments = [NSArray arrayWithObjects:[NSString stringWithUTF8String:kReloadListenPlist], nil];
-        [LMDaemonStartupHelper shareInstance].cmdPath = DAEMON_ACTIVATOR_CMD;
-        int ret = [[LMDaemonStartupHelper shareInstance] activeDaemon];
-        NSLog(@"activeDaemon end");
+        // 安装完成后 daemon 已被 loadPlist 拉起，只需等待 XPC 就绪（不弹密码框）
+        // 非安装场景（daemon 常驻），直接 XPC 连接，极端情况兜底提权
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            int ret;
+            if (justInstalled) {
+                // 刚安装完，daemon 已被 root loadPlist，只需等它启动就绪（不弹密码框）
+                ret = [[LMDaemonStartupHelper shareInstance] waitForDaemon];
+            } else {
+                // 非安装场景，daemon 应该常驻运行
+                ret = [[LMDaemonStartupHelper shareInstance] activeDaemon];
+            }
+            NSLog(@"activeDaemon end, ret: %d, justInstalled: %d", ret, justInstalled);
+        });
         [self initData];
         
         appTashDel  = [[AppTrashDel alloc] init];

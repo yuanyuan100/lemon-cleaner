@@ -79,24 +79,7 @@ int copyFileIfNeed() {
 }
 
 
-void reloadListenPlist() {
-    unloadPlistByLable(DAEMON_STARTUP_LISTEN_LABLE);
-    NSFileManager *fileMgr = [NSFileManager defaultManager];
-    if ([fileMgr fileExistsAtPath:DAEMON_STARTUP_LISTEN_LAUNCHD_PATH]) {
-        [fileMgr removeItemAtPath:DAEMON_STARTUP_LISTEN_LAUNCHD_PATH error:nil];
-    }
-    
-    NSString *srcPath = [DEFAULT_APP_PATH stringByAppendingPathComponent:@"Contents/Frameworks"];
-    srcPath = [srcPath stringByAppendingPathComponent:[DAEMON_STARTUP_LISTEN_LAUNCHD_PATH lastPathComponent]];
-    
-    if (![fileMgr copyItemAtPath:srcPath toPath:DAEMON_STARTUP_LISTEN_LAUNCHD_PATH error:nil]) {
-        NSLog(@"%s, move file %@ to %@ error", __FUNCTION__, srcPath, DAEMON_STARTUP_LISTEN_LAUNCHD_PATH);
-        return;
-    }
-    NSDictionary *rootAttr = @{NSFileOwnerAccountName:@"root",NSFileGroupOwnerAccountName:@"admin"};
-    [fileMgr setAttributes:rootAttr ofItemAtPath:DAEMON_STARTUP_LISTEN_LAUNCHD_PATH error:nil];
-    loadPlist(DAEMON_STARTUP_LISTEN_LAUNCHD_PATH);
-}
+// Security fix: reloadListenPlist() 已移除，socket 唤醒机制不再使用
 
 void unlinkOldSemWithPath(NSString *path)
 {
@@ -486,22 +469,16 @@ int intsallSub(const char *szUserName, const char *szVersion, int nUserPid)
         return QMINST_ERR_COPYPLIST;
     }
     [fileMgr setAttributes:rootAttr ofItemAtPath:DAEMON_LAUNCHD_PATH error:nil];
-    if (isRepairFailedSystemVersion()) {    // 13.7.5 卸载listen无效
+    // 无条件 load daemon plist，确保安装后 daemon 立即以 root 启动
+    {
         int result = loadPlist(DAEMON_LAUNCHD_PATH);
-        NSLog(@" [repair] %s, load deamon : %d", __FUNCTION__, result);
+        NSLog(@"%s, load daemon plist result: %d", __FUNCTION__, result);
     }
     
     //    NSString *loadCmd = [NSString stringWithFormat:@"launchctl load -w %@", DAEMON_LAUNCHD_PATH];
     //    system([loadCmd UTF8String]);
     
-    // 拷贝startup launchd配置文件
-    NSString *listenLaunchSrcPath = [selfFolder stringByAppendingPathComponent:[DAEMON_STARTUP_LISTEN_LAUNCHD_PATH lastPathComponent]];
-    [fileMgr removeItemAtPath:DAEMON_STARTUP_LISTEN_LAUNCHD_PATH error:nil];
-    if (![fileMgr copyItemAtPath:listenLaunchSrcPath toPath:DAEMON_STARTUP_LISTEN_LAUNCHD_PATH error:nil]) {
-        return QMINST_ERR_COPYPLIST;
-    }
-    [fileMgr setAttributes:rootAttr ofItemAtPath:DAEMON_STARTUP_LISTEN_LAUNCHD_PATH error:nil];
-    loadPlist(DAEMON_STARTUP_LISTEN_LAUNCHD_PATH);
+    // Security fix: listen plist 拷贝逻辑已移除
     
     // 拷贝自身uninstall launchd配置文件
     NSString *uninsatllLaunchSrcPath = [selfFolder stringByAppendingPathComponent:[DAEMON_UNINSTALL_LAUNCHD_PATH lastPathComponent]];

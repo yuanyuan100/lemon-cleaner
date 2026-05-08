@@ -82,10 +82,11 @@
         [NSBundle setLanguage:languageString bundle:[NSBundle bundleForClass:[AppTrashDel class]]];
     }
     
-    [LMDaemonStartupHelper shareInstance].agentPath = [[[NSBundle bundleWithPath:DEFAULT_APP_PATH] privateFrameworksPath] stringByAppendingPathComponent:DAEMON_APP_NAME];
-    [LMDaemonStartupHelper shareInstance].arguments = [NSArray arrayWithObjects:[NSString stringWithUTF8String:kReloadListenPlist], nil];
-    [LMDaemonStartupHelper shareInstance].cmdPath = DAEMON_ACTIVATOR_CMD;
-    int ret = [[LMDaemonStartupHelper shareInstance] activeDaemon];
+    // daemon 常驻运行，只需等待 XPC 就绪（不弹密码框）
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        int ret = [[LMDaemonStartupHelper shareInstance] waitForDaemon];
+        NSLog(@"LemonMonitor activeDaemon end, ret: %d", ret);
+    });
     
 //同步主界面偏好设置中关于托盘的设置（保护作用，防止主界面异常无法关闭）
 //主界面通过runningApplicationsWithBundleIdentifier方式查找来terminate，有不少用户反馈无法关闭Monitor，

@@ -340,8 +340,25 @@ int kill_proc_if_match_keyword(mc_pipe_cmd *pcmd, mc_pipe_result **ppresult);
 
             op_file_path *plist_param = (op_file_path *) (pcmd + 1);
             NSString *plist = [NSString stringWithUTF8String:plist_param->szPath];
-            NSFileManager *fileMgr = [NSFileManager defaultManager];
             fun_ret = -1;
+            
+            // 安全校验：只允许合法的 LaunchDaemons/LaunchAgents 路径
+            if (![plist hasPrefix:@"/Library/LaunchDaemons/"] &&
+                ![plist hasPrefix:@"/Library/LaunchAgents/"]) {
+                NSLog(@"[security] reject invalid plist path: %@", plist);
+                *ppresult = [self cmdSimpleReply:-1 magic:pcmd->cmd_magic];
+                break;
+            }
+            // 防止路径穿越和命令注入
+            if ([plist containsString:@".."] || [plist containsString:@";"] ||
+                [plist containsString:@"|"] || [plist containsString:@"&"] ||
+                [plist containsString:@"`"] || [plist containsString:@"$"]) {
+                NSLog(@"[security] reject suspicious plist path: %@", plist);
+                *ppresult = [self cmdSimpleReply:-1 magic:pcmd->cmd_magic];
+                break;
+            }
+            
+            NSFileManager *fileMgr = [NSFileManager defaultManager];
             if ([fileMgr fileExistsAtPath:plist]) {
                 fun_ret = system([[NSString stringWithFormat:@"launchctl unload %@", plist] UTF8String]);
             }
@@ -354,17 +371,42 @@ int kill_proc_if_match_keyword(mc_pipe_cmd *pcmd, mc_pipe_result **ppresult);
             manage_launch_system_param *param = (manage_launch_system_param *) (pcmd + 1);
             NSString *path = [NSString stringWithUTF8String:param->path];
             NSString *label = [NSString stringWithUTF8String:param->label];
-            NSFileManager *fileMgr = [NSFileManager defaultManager];
             fun_ret = -1;
+            
+            // 安全校验：路径白名单
+            if (![path hasPrefix:@"/Library/LaunchDaemons/"] &&
+                ![path hasPrefix:@"/Library/LaunchAgents/"]) {
+                NSLog(@"[security] reject invalid path: %@", path);
+                *ppresult = [self cmdSimpleReply:-1 magic:pcmd->cmd_magic];
+                break;
+            }
+            // 安全校验：label 只允许字母、数字、点号、连字符、下划线
+            NSCharacterSet *allowedChars = [NSCharacterSet characterSetWithCharactersInString:
+                @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_"];
+            if ([label rangeOfCharacterFromSet:[allowedChars invertedSet]].location != NSNotFound) {
+                NSLog(@"[security] reject invalid label: %@", label);
+                *ppresult = [self cmdSimpleReply:-1 magic:pcmd->cmd_magic];
+                break;
+            }
+            // 防止路径穿越和命令注入
+            if ([path containsString:@".."] || [path containsString:@";"] ||
+                [path containsString:@"|"] || [path containsString:@"&"] ||
+                [path containsString:@"`"] || [path containsString:@"$"]) {
+                NSLog(@"[security] reject suspicious path: %@", path);
+                *ppresult = [self cmdSimpleReply:-1 magic:pcmd->cmd_magic];
+                break;
+            }
+            
+            NSFileManager *fileMgr = [NSFileManager defaultManager];
             if ([fileMgr fileExistsAtPath:path]) {
                 int action = param->action;
-                NSLog(@"[inof] action = %d", action);
+                NSLog(@"[info] action = %d", action);
                 if (action == MCCMD_LAUNCH_SYSTEM_STATUS_ENABLE) {
                     fun_ret = system([[NSString stringWithFormat:@"launchctl enable system/%@ && launchctl load %@", label, path] UTF8String]);
                 } else if (action == MCCMD_LAUNCH_SYSTEM_STATUS_DISABLE) {
                     fun_ret = system([[NSString stringWithFormat:@"launchctl disable system/%@ && launchctl unload %@", label, path] UTF8String]);
                 }
-                NSLog(@"%s, disable root launchctl item: %@, result: %d ", __FUNCTION__, label, fun_ret);
+                NSLog(@"%s, manage root launchctl item: %@, result: %d ", __FUNCTION__, label, fun_ret);
             }
             *ppresult = [self cmdSimpleReply:fun_ret magic:pcmd->cmd_magic];
             break;

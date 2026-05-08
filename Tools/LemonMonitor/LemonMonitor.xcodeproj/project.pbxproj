@@ -147,7 +147,6 @@
 		18FD67B92248825C00036012 /* LMMonitorTrashManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LMMonitorTrashManager.m; sourceTree = "<group>"; };
 		2A7A8E8F2E161F9C0056956F /* LMPPSmallComponentView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LMPPSmallComponentView.h; sourceTree = "<group>"; };
 		2A7A8E902E161F9C0056956F /* LMPPSmallComponentView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LMPPSmallComponentView.m; sourceTree = "<group>"; };
-		2F6E0B7721CA3763009B4875 /* SocketCommunicationKeyWord.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SocketCommunicationKeyWord.h; path = ../../LemonDaemon/LemonDaemonActivator/SocketCommunicationKeyWord.h; sourceTree = "<group>"; };
 		2FAE179F5D5E36229D7AE5D8 /* Pods-LemonMonitor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LemonMonitor.debug.xcconfig"; path = "../../Pods/Target Support Files/Pods-LemonMonitor/Pods-LemonMonitor.debug.xcconfig"; sourceTree = "<group>"; };
 		47D7AC3330517E6E138F5D82 /* Pods-LemonMonitor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LemonMonitor.release.xcconfig"; path = "../../Pods/Target Support Files/Pods-LemonMonitor/Pods-LemonMonitor.release.xcconfig"; sourceTree = "<group>"; };
 		5867102A50C1CF6F106E2FB8 /* Pods_LemonMonitor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LemonMonitor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -500,7 +499,6 @@
 				B8F110571962572100D29FFC /* AppDelegate.mm */,
 				847E2D4921C74AE400F49D5D /* LemonMonitroHelpParams.h */,
 				847E2D4A21C74AE400F49D5D /* LemonMonitroHelpParams.m */,
-				2F6E0B7721CA3763009B4875 /* SocketCommunicationKeyWord.h */,
 				B8F11078196257B000D29FFC /* MainMenu.xib */,
 				B8F1104B1962572100D29FFC /* Supporting Files */,
 				D46FAA0621008BD100CF8E0F /* Resources */,

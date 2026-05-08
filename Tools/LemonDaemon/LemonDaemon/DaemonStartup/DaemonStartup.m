@@ -10,7 +10,6 @@
 #import "LemonDaemonConst.h"
 #import "LMPlistHelper.h"
 #import "CmcProcess.h"
-#import "SocketCommunicationKeyWord.h"
 #include <SystemConfiguration/SystemConfiguration.h>
 #import "LMPlistHelper.h"
 #import "ExecuteCmdHelper.h"
@@ -47,40 +46,15 @@ BOOL isNeedExitDaemon(pid_t clientPid) {
 
 void exitDaemon(void) {
     NSLog(@"%s", __FUNCTION__);
-    int ret = unloadPlistByLable(DAEMON_LAUNCHD_LABLE);
-    if (ret == 0) {
-        NSLog(@"%s, unload %@, successfully", __FUNCTION__, DAEMON_LAUNCHD_PATH);
-    } else {
-        NSLog(@"%s, unload %@, failed: %@", __FUNCTION__, DAEMON_LAUNCHD_PATH, getErrorStr(ret));
-    }
-    exit(0);
+    // Security fix: daemon 保持常驻，不再退出
+    // 原因：移除 socket 唤醒后，exit(0) 会导致 launchd 移除 job，
+    // 下次 XPC 连接无法按需拉起，需要重新弹密码框 load plist。
+    // 保持常驻：daemon 内存占用极低，等待 XPC 连接即可。
+    // 只有卸载流程（uninstallSub）中才执行 unload + exit。
+    NSLog(@"%s: daemon stays resident, skipping exit", __FUNCTION__);
 }
 
-// 通知客户端启动情况。
-void notiflyClient(int ret){
-    if (ret == 0) {
-        NSLog(@"%@", KEY_WORD_START_SUCCESSED);
-    } else {
-        NSLog(@"%@", KEY_WORD_START_FAILED);
-    }
-}
-
-int startDaemon(void) {
-    NSLog(@"%s", __FUNCTION__);
-    int ret = loadPlist(DAEMON_LAUNCHD_PATH);
-    if (ret == 0) {
-        NSLog(@"%s, load %@, successfully", __FUNCTION__, DAEMON_LAUNCHD_PATH);
-    } else {
-        NSLog(@"%s, load %@, failed: %@", __FUNCTION__, DAEMON_LAUNCHD_PATH, getErrorStr(ret));
-    }
-    
-    
-    // Daemon从socket唤醒后，NSLOG的任何输出都会重定向到socket文件上。
-    // 客户端通过读取socket文件，通过匹配字符串尾部的KEY_WORD_START_SUCCESSED和KEY_WORD_START_FAILED去判断启动情况
-    // notifly后不要NSlog输出任何东西，因为两次NSLOG输出可能沾在一起，客互端现简单处理没有处理沾包情况。
-    notiflyClient(ret);
-    return ret;
-}
+// Security fix: notiflyClient() 和 startDaemon() 已移除，socket 唤醒机制不再使用
 
 
 void printDaemonOrAgentsStatus(void){

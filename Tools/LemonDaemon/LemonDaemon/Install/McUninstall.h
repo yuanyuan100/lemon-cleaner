@@ -19,4 +19,4 @@ int copyFileIfNeed(void);
 
 void removeAllFiles(void);
 
-void reloadListenPlist(void);
+// Security fix: reloadListenPlist() 已移除
